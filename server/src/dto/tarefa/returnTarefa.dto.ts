@@ -1,6 +1,7 @@
 import Joi from 'joi';
 
 const returnTarefaSchema = Joi.object({
+    id: Joi.string().required(),
     usuarioEmail: Joi.string().email().required(),
     titulo: Joi.string().required(),
     descricao: Joi.string().required(),
@@ -10,6 +11,7 @@ const returnTarefaSchema = Joi.object({
 });
 
 interface IReturnTarefaDTO {
+    id: string;
     usuarioEmail: string;
     titulo: string;
     descricao: string;
@@ -31,6 +33,7 @@ export class ReturnTarefaDTO {
 
     static criarComTarefa(novaTarefa: any): ReturnTarefaDTO {
         const tarefaData: IReturnTarefaDTO = {
+            id: novaTarefa.id,
             usuarioEmail: novaTarefa.usuarioEmail,
             titulo: novaTarefa.titulo,
             descricao: novaTarefa.descricao,
