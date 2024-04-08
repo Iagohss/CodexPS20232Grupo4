@@ -9,6 +9,7 @@ import { postTarefaSchema } from '../dto/tarefa/postTarefa.dto'
 import { ValidationError } from 'joi'
 import { getTarefasEmailSchema } from '../dto/tarefa/getTarefasEmail.dto'
 import { getTarefaSchema } from '../dto/tarefa/getTarefa.dto'
+import { putTarefaSchemaValidate } from '../dto/tarefa/putTarefa.dto'
 
 
 class tarefaController{
@@ -116,6 +117,39 @@ class tarefaController{
         }
 
     }
+
+    // PUT
+    putTarefa = async (req: Request, res: Response) => {
+        const dados = {
+            usuarioEmail: req.body.usuarioEmail,
+            usuarioSenha: req.body.usuarioSenha,
+            titulo: req.body.titulo,
+            descricao: req.body.descricao,
+            dataAdicionada: req.body.dataAdicionada,
+            dataLimite: req.body.dataLimite,
+            dataConclusao: req.body.dataConclusao,
+            tarefaID: req.params.id
+        }
+
+        const {error, value} = putTarefaSchemaValidate.validate(dados)
+
+        if (error){ // se a validação na aplicação falhar:
+            const message = error.details.map(detail => detail.message);
+            res.status(400).json(message)
+        }else{ // a validação na aplicação deu certo, falta a do MongoDB:
+            try{
+                const tarefa = await tarefaServices.putTarefa(value)
+                res.status(201).send(tarefa)
+            }catch(error: any){
+                if (error instanceof ResponseError){
+                    res.status(error.codigoResposta).json(error.message)
+                }else{
+                    res.status(500).json("Erro no servidor.")
+                }
+            }
+        }        
+    }
+
 
 }
 

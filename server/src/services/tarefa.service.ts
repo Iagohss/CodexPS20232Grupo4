@@ -15,6 +15,8 @@ import { TarefaNaoPodeSerCriadaError } from "../errors/tarefas/tarefaNaoPodeSerC
 import { UsuarioNaoExisteError } from "../errors/usuario/usuarioNaoExisteError";
 import { GetTarefasEmailDTO } from "../dto/tarefa/getTarefasEmail.dto";
 import { TarefaNaoExisteError } from "../errors/tarefas/tarefaNaoExisteError";
+import { PutTarefaDTO } from "../dto/tarefa/putTarefa.dto";
+import { TarefaNaoPodeSerModificadaError } from "../errors/tarefas/tarefaNaoPodeSerModificadaError";
 
 
 export class tarefaService{
@@ -107,5 +109,40 @@ export class tarefaService{
         }
     }
 
+    // PUT
+    async putTarefa(data:any){
+        try{
+            const putTarefaDTO = new PutTarefaDTO(data)
+
+            await validaUsuarioESenha(putTarefaDTO.data.usuarioEmail, putTarefaDTO.data.usuarioSenha)
+
+            const updateTarefa = await Tarefa.findOneAndUpdate(
+                { _id: putTarefaDTO.data.tarefaID, usuarioEmail: putTarefaDTO.data.usuarioEmail },
+                {
+                  titulo: putTarefaDTO.data.titulo,
+                  descricao: putTarefaDTO.data.descricao,
+                  dataAdicionada: putTarefaDTO.data.dataAdicionada,
+                  dataLimite: putTarefaDTO.data.dataLimite,
+                  dataConclusao: putTarefaDTO.data.dataConclusao
+                },
+                { new: true }
+              );
+              
+              if (!updateTarefa) {
+                throw new TarefaNaoExisteError();
+              }
+              
+              return ReturnTarefaDTO.criarComTarefa(updateTarefa);
+
+
+    }catch(error: any){
+        if (error instanceof ResponseError){
+            throw error
+        }else{
+            throw new DatabaseError(error.message)
+        }
+    }
+
+  }
 }
 export const tarefaServices = new tarefaService()

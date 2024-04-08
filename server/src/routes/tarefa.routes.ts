@@ -16,7 +16,7 @@ tarefaRouter.get('/email/:usuarioEmail', TarefaController.getTarefasEmail)
 tarefaRouter.post('/', TarefaController.postTarefa)
 
 // PUT
-//tarefaRouter.put('/:id', TarefaController.putTarefa)
+tarefaRouter.put('/:id', TarefaController.putTarefa)
 
 // DELETE
 //tarefaRouter.delete('/:id', TarefaController.deleteTarefa)

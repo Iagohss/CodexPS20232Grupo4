@@ -76,7 +76,7 @@ export class usuarioService{
                 throw new UsuarioNaoPodeSerModificadoError("Senha do usuário inválida.")
             }
 
-            const updateUsuario = await Usuario.updateOne(
+            const updateUsuario = await Usuario.findOneAndUpdate(
             { email: updateUsuarioDTO.data.email }, 
             {
                 email: updateUsuarioDTO.data.email,
@@ -85,10 +85,10 @@ export class usuarioService{
                 dataNascimento: updateUsuarioDTO.data.dataNascimento,
                 genero: updateUsuarioDTO.data.genero,
                 senha: updateUsuarioDTO.data.senhaNova
-            }
+            },
+            {new: true}
         );
-            // TODO: o updateUsuario vem vazio por alguma razão? Talvez não seja necessário fazer o this.getUsuario abaixo
-            return this.getUsuario(updateUsuarioDTO.data.email)
+            return ReturnUsuarioDTO.criarComUsuario(updateUsuario)
 
         }catch(error: any){
             throw new UsuarioNaoPodeSerModificadoError(error.message)

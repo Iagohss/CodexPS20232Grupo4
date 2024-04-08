@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const postUsuarioSchema = Joi.object({
+export const postUsuarioSchema = Joi.object({
     email: Joi.string().email().required(),
     primeiroNome: Joi.string().required(),
     restoNome: Joi.string().required(),
