@@ -5,8 +5,9 @@ import TodoForm from './components/TodoForm';
 import Search from './components/Search';
 import Filter from './components/Filter';
 
-import { TTarefa, getTarefas } from "./api/getTarefas";
-import { postTarefa } from "./api/postTarefas";
+import { doGETALLtarefa } from "./api/getTarefas";
+import { doPOSTtarefa } from "./api/postTarefas";
+import { TTarefa } from './api/types';
 
 function App() {
   const [tarefas, setTarefas] = useState<TTarefa[]>([]);
@@ -14,13 +15,15 @@ function App() {
   const [filter, setFilter] = useState("All");
   const [sort, setSort] = useState("Asc");
 
-  const addTarefa = () => {
+  const addTarefa = async () => {
     const dataAdicionada: Date = new Date();
     let dataLimite: Date = new Date(dataAdicionada);
     let dataConclusao: Date = new Date(dataAdicionada);
     dataLimite.setDate(dataLimite.getDate() + 7)
     dataConclusao.setDate(dataConclusao.getDate() + Math.floor(Math.random() * 10) + 1);
 
+    //Esse objeto deve ser criado por TodoForm e passado como parâmetro
+    //App deve apenas adicionar informações de email e senha
     const newTarefa: TTarefa = {
       usuarioEmail: "testeemail@email.com",
       titulo: "Teste",
@@ -30,15 +33,13 @@ function App() {
       dataConclusao: dataAdicionada
     };
     const dadosComSenha = {...newTarefa, usuarioSenha : "senhateste"};
-    postTarefa(dadosComSenha)
-    .then(() => {
-      setTarefas([...tarefas, newTarefa]);
-    });
+    const nTarefa = await doPOSTtarefa(dadosComSenha)
+    setTarefas([...tarefas, nTarefa]);
   };
 
   useEffect(() => {
     async function fetchTarefas() {
-      const newTarefas = await getTarefas();
+      const newTarefas = await doGETALLtarefa();
       setTarefas(newTarefas);
     }
     fetchTarefas();

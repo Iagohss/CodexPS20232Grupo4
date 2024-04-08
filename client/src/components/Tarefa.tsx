@@ -1,4 +1,4 @@
-import { TTarefa } from '../api/getTarefas'
+import { TTarefa } from '../api/types'
 
 type TarefaProps = {
   tarefa : TTarefa

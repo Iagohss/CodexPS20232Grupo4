@@ -1,14 +1,6 @@
-type DadosComSenha = {
-  usuarioEmail: string,
-  titulo: string,
-  descricao: string,
-  dataAdicionada: Date,
-  dataLimite: Date,
-  dataConclusao: Date,
-  usuarioSenha : string
-}
+import { DadosComSenha, _dataTarefas, TTarefa } from "./types";
 
-export async function postTarefa(dadosComSenha : DadosComSenha) {
+export async function doPOSTtarefa(dadosComSenha : DadosComSenha) : Promise<TTarefa>{
   const response = await fetch(`http://localhost:5000/api/v1/tarefas`, {
     method: "POST",
     body: JSON.stringify(
@@ -18,5 +10,6 @@ export async function postTarefa(dadosComSenha : DadosComSenha) {
       "Content-Type": "application/json",
     },
   });
-  return response.json();
+  const saida : _dataTarefas = await response.json();
+  return saida._data;
 }
