@@ -8,6 +8,7 @@ import {ResponseError} from '../errors/ResponseError'
 import { postTarefaSchema } from '../dto/tarefa/postTarefa.dto'
 import { ValidationError } from 'joi'
 import { getTarefasEmailSchema } from '../dto/tarefa/getTarefasEmail.dto'
+import { getTarefaSchema } from '../dto/tarefa/getTarefa.dto'
 
 
 class tarefaController{
@@ -21,7 +22,7 @@ class tarefaController{
             if (error instanceof ResponseError){
                 res.status(error.codigoResposta).json(error.message);
             }else{
-                res.status(500).json("Erro no servidor")
+                res.status(500).json("Erro no servidor.")
             }
         }
     }
@@ -46,11 +47,38 @@ class tarefaController{
             if (error instanceof ResponseError){
                 res.status(error.codigoResposta).json(error.message)
             }else{
-                res.status(500).json("Erro no servidor")
+                res.status(500).json("Erro no servidor.")
             
             }
         }
     }
+
+    // GET ID
+    getTarefa = async (req: Request, res: Response) => {
+        try{
+            const dados = {
+                usuarioEmail: req.body.usuarioEmail,
+                usuarioSenha: req.body.usuarioSenha,
+                tarefaID: req.params.id
+            }
+
+            const {error, value} = getTarefaSchema.validate(dados)
+
+            if (error){ // se a validação na aplicação falhar:
+                const message = error.details.map(detail => detail.message);
+                res.status(400).json(message)
+            }else{ // a validação na aplicação deu certo, falta a do MongoDB:
+                const tarefa = await tarefaServices.getTarefa(value)
+                res.status(201).send(tarefa)
+            }
+        }catch(error: any){
+            if (error instanceof ResponseError){
+                res.status(error.codigoResposta).json(error.message)
+            }else{
+                res.status(500).json("Erro no servidor.")
+        }
+    }
+}
 
     // POST
     postTarefa = async(req: Request, res: Response) =>{
@@ -81,7 +109,7 @@ class tarefaController{
                 if (error instanceof ResponseError){
                     res.status(error.codigoResposta).json(error.message)
                 }else{
-                    res.status(500).json("Erro no servidor")
+                    res.status(500).json("Erro no servidor.")
                 }
             }
 

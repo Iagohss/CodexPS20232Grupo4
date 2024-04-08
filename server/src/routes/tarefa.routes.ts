@@ -7,7 +7,7 @@ export const tarefaRouter = express.Router()
 tarefaRouter.get('/', TarefaController.getTarefas)
 
 // GET ID
-//tarefaRouter.get('/:id', TarefaController.getTarefa)
+tarefaRouter.get('/:id', TarefaController.getTarefa)
 
 // GET ALL EMAIL
 tarefaRouter.get('/email/:usuarioEmail', TarefaController.getTarefasEmail)

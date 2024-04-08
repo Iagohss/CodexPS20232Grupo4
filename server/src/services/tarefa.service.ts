@@ -14,6 +14,7 @@ import { ResponseError } from "../errors/ResponseError";
 import { TarefaNaoPodeSerCriadaError } from "../errors/tarefas/tarefaNaoPodeSerCriadaError";
 import { UsuarioNaoExisteError } from "../errors/usuario/usuarioNaoExisteError";
 import { GetTarefasEmailDTO } from "../dto/tarefa/getTarefasEmail.dto";
+import { TarefaNaoExisteError } from "../errors/tarefas/tarefaNaoExisteError";
 
 
 export class tarefaService{
@@ -55,8 +56,22 @@ export class tarefaService{
     async getTarefa(data: any){ // TODO 
         try{
             const getTarefaDTO = new GetTarefaDTO(data)
+
+            await validaUsuarioESenha(getTarefaDTO.data.usuarioEmail, getTarefaDTO.data.usuarioSenha)
+
+            const tarefa = await Tarefa.findOne({_id: getTarefaDTO.data.tarefaID, usuarioEmail: getTarefaDTO.data.usuarioEmail})
+
+            if (!tarefa){ throw new TarefaNaoExisteError()}
+
+            return ReturnTarefaDTO.criarComTarefa(tarefa)
+
+
         }catch(error: any){
-        
+            if (error instanceof ResponseError){
+                throw error
+            }else{
+                throw new DatabaseError(error.message)
+            }
         }
     }
 

@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const getTarefaSchema = Joi.object({
+export const getTarefaSchema = Joi.object({
     usuarioEmail: Joi.string().email().required(),
     usuarioSenha: Joi.string().required(),
     tarefaID: Joi.string().required()
