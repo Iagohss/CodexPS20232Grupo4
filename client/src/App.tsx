@@ -7,32 +7,15 @@ import Filter from './components/Filter';
 
 import { doGETALLtarefa } from "./api/getTarefas";
 import { doPOSTtarefa } from "./api/postTarefas";
-import { TTarefa } from './api/types';
+import { TTarefa, TarefaNoAutentication } from './api/types';
 
 function App() {
   const [tarefas, setTarefas] = useState<TTarefa[]>([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
-  const [sort, setSort] = useState("Asc");
 
-  const addTarefa = async () => {
-    const dataAdicionada: Date = new Date();
-    let dataLimite: Date = new Date(dataAdicionada);
-    let dataConclusao: Date = new Date(dataAdicionada);
-    dataLimite.setDate(dataLimite.getDate() + 7)
-    dataConclusao.setDate(dataConclusao.getDate() + Math.floor(Math.random() * 10) + 1);
-
-    //Esse objeto deve ser criado por TodoForm e passado como parâmetro
-    //App deve apenas adicionar informações de email e senha
-    const newTarefa: TTarefa = {
-      usuarioEmail: "testeemail@email.com",
-      titulo: "Teste",
-      descricao: "Testando",
-      dataAdicionada: dataAdicionada,
-      dataLimite: dataAdicionada,
-      dataConclusao: dataAdicionada
-    };
-    const dadosComSenha = {...newTarefa, usuarioSenha : "senhateste"};
+  const addTarefa = async (newTarefa : TarefaNoAutentication) => {
+    const dadosComSenha = {...newTarefa, usuarioEmail: "testeemail@email.com", usuarioSenha : "senhateste"};
     const nTarefa = await doPOSTtarefa(dadosComSenha)
     setTarefas([...tarefas, nTarefa]);
   };
@@ -48,8 +31,10 @@ function App() {
   return (
    <div className="app">
     <h1>Lista de tarefas</h1>
-    <Search search={search} setSearch={setSearch}/>
-    <Filter filter={filter} setFilter={setFilter} setSort={setSort}/>
+    <div className="flex-container">
+      <Search search={search} setSearch={setSearch}/>
+      <Filter filter={filter} setFilter={setFilter}/>
+    </div>
     <div className="todo-list">
       {tarefas.map((tarefa) => (
           <Tarefa 

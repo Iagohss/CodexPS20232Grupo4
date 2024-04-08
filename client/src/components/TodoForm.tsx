@@ -1,36 +1,56 @@
 import {useState} from 'react'
+import { TarefaNoAutentication } from '../api/types'
 
-type AddTarefaProps = {addTarefa : () => void}
+type AddTarefaProps = {addTarefa : (nt : TarefaNoAutentication) => void}
 const TodoForm = (props : AddTarefaProps) => {
-    const [value, setValue] = useState("")
-    const [category, setCategory] = useState("")
+    const [titulo, setTitulo] = useState("")
+    const [descricao, setDescricao] = useState("")
+    const [dataLimite, setDataLimite] = useState(new Date())
 
     const handleSubmit = (e : React.FormEvent) => {
         e.preventDefault();
-        props.addTarefa();
-        setValue("");
-        setCategory("");
+        const newTarefa: TarefaNoAutentication = {
+          titulo: titulo,
+          descricao: descricao,
+          dataAdicionada: new Date(),
+          dataLimite: dataLimite
+        };
+        props.addTarefa(newTarefa);
+        setTitulo("");
+        setDescricao("");
+        setDataLimite(new Date());
     };
 
   return (
     <div className="todo-form">
         <h2>Criar Tarefa:</h2>
         <form onSubmit={handleSubmit}>
+            <label htmlFor="titulo">Titulo:</label>
             <input  
                 type="Text" 
+                id='titulo'
                 placeholder='Digite o título da tarefa' 
-                value={value}
-                onChange={(e)=> setValue(e.target.value)}
+                maxLength={70}
+                value={titulo}
+                onChange={(e)=> setTitulo(e.target.value)}
             />
-            <select 
-                value={category}
-                onChange={(e)=> setCategory(e.target.value)}
-                >
-                <option value="">Selecione uma categoria</option>
-                <option value="Trabalho">Trabalho</option>
-                <option value="Pessoal">Pessoal</option>
-                <option value="Estudos">Estudos</option>
-            </select>
+            <label htmlFor="descricao">Descrição:</label>
+            <input  
+                type="Text" 
+                id="descricao"
+                placeholder='Digite a descrição da tarefa' 
+                maxLength={200}
+                value={descricao}
+                onChange={(e)=> setDescricao(e.target.value)}
+            />
+            <label htmlFor="data">Data limite:</label>
+            <input  
+                type="date" 
+                id="data"
+                placeholder='Digite o título da tarefa' 
+                value={dataLimite.toISOString().substring(0,10)}
+                onChange={(e)=> setDataLimite(new Date(e.target.value))}
+            />
             <button type='submit'>Criar Tarefa</button>
         </form>
     </div>

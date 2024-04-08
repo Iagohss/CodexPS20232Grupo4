@@ -4,7 +4,15 @@ export type TTarefa = {
   descricao: string,
   dataAdicionada: Date,
   dataLimite: Date,
-  dataConclusao: Date
+  dataConclusao?: Date
+};
+
+export type TarefaNoAutentication = {
+  titulo: string,
+  descricao: string,
+  dataAdicionada: Date,
+  dataLimite: Date,
+  dataConclusao?: Date
 };
 
 export type _dataTarefas = {
@@ -17,6 +25,6 @@ export type DadosComSenha = {
   descricao: string,
   dataAdicionada: Date,
   dataLimite: Date,
-  dataConclusao: Date,
+  dataConclusao?: Date,
   usuarioSenha : string
 }

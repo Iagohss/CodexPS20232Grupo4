@@ -14,15 +14,15 @@ const Tarefa = (props : TarefaProps) => {
         }}
     >
         <div className="content">
-        <p>{tarefa.titulo}</p>
-        <p>{tarefa.descricao}</p>
-        {/*<p className="data">Data Limite: {tarefa.dataLimite.getDate()}/{tarefa.dataLimite.getMonth()}</p>
+        <h4 className="titulo">{tarefa.titulo}</h4>
+        <p className="descricao">{tarefa.descricao}</p>
+        <p className="data">Data Limite: {tarefa.dataLimite.toString().substring(0,10)}</p>
         </div>
         <div>
-        {/* <button className="complete" onClick={() => completeTodo(todo.id)}>
+        <button className="complete" /* onClick={() => completeTodo(todo.id)} */>
             Completar
         </button>
-        <button className="remove" onClick={() => rmvTodo(todo.id)}>
+        {/* <button className="remove" onClick={() => rmvTodo(todo.id)}>
             x
         </button> */}
         </div>
