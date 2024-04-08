@@ -79,7 +79,6 @@ export class usuarioService{
             const updateUsuario = await Usuario.findOneAndUpdate(
             { email: updateUsuarioDTO.data.email }, 
             {
-                email: updateUsuarioDTO.data.email,
                 primeiroNome: updateUsuarioDTO.data.primeiroNome,
                 restoNome: updateUsuarioDTO.data.restoNome,
                 dataNascimento: updateUsuarioDTO.data.dataNascimento,
@@ -88,6 +87,7 @@ export class usuarioService{
             },
             {new: true}
         );
+
             return ReturnUsuarioDTO.criarComUsuario(updateUsuario)
 
         }catch(error: any){
