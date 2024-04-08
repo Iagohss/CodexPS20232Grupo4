@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const deleteTarefaSchemaValidate = Joi.object({
+export const deleteTarefaSchemaValidate = Joi.object({
     usuarioEmail: Joi.string().email().required(),
     usuarioSenha: Joi.string().required(),
     tarefaID: Joi.string().required()

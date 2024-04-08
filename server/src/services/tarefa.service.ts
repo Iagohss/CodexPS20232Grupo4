@@ -17,6 +17,7 @@ import { GetTarefasEmailDTO } from "../dto/tarefa/getTarefasEmail.dto";
 import { TarefaNaoExisteError } from "../errors/tarefas/tarefaNaoExisteError";
 import { PutTarefaDTO } from "../dto/tarefa/putTarefa.dto";
 import { TarefaNaoPodeSerModificadaError } from "../errors/tarefas/tarefaNaoPodeSerModificadaError";
+import { DeleteTarefaDTO } from "../dto/tarefa/deleteTarefa.dto";
 
 
 export class tarefaService{
@@ -144,5 +145,27 @@ export class tarefaService{
     }
 
   }
+
+  // DELETE
+  async deleteTarefa(data: any){
+    try{
+        const deleteTarefaDTO = new DeleteTarefaDTO(data)
+
+        await validaUsuarioESenha(deleteTarefaDTO.data.usuarioEmail, deleteTarefaDTO.data.usuarioSenha)
+
+        const tarefa = await Tarefa.findOneAndDelete({_id: deleteTarefaDTO.data.tarefaID, usuarioEmail: deleteTarefaDTO.data.usuarioEmail})
+
+        if (!tarefa){
+            throw new TarefaNaoExisteError()
+        }
+    }catch(error: any){
+        if (error instanceof ResponseError){
+            throw error
+        }else{
+            throw new DatabaseError(error.message)
+        }
+    }
+  }
+
 }
 export const tarefaServices = new tarefaService()

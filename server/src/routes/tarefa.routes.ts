@@ -19,4 +19,4 @@ tarefaRouter.post('/', TarefaController.postTarefa)
 tarefaRouter.put('/:id', TarefaController.putTarefa)
 
 // DELETE
-//tarefaRouter.delete('/:id', TarefaController.deleteTarefa)
+tarefaRouter.delete('/:id', TarefaController.deleteTarefa)
