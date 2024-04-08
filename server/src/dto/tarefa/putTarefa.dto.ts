@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-const putTarefaSchemaValidate = Joi.object({
+export const putTarefaSchemaValidate = Joi.object({
     usuarioEmail: Joi.string().email().required(),
     usuarioSenha: Joi.string().required(),
     titulo: Joi.string().required(),
