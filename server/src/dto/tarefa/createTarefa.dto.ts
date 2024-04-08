@@ -40,9 +40,8 @@ export class CreateTarefaDTO {
             dataLimite: postTarefaData.dataLimite,
             dataConclusao: postTarefaData.dataConclusao
         }   
-        const DTO = new CreateTarefaDTO(createTarefaData)
-        console.log(DTO)
-        return DTO
+        
+        return new CreateTarefaDTO(createTarefaData)
     }
 
     get data(): ICreateTarefaDTO {

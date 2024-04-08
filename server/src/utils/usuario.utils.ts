@@ -1,4 +1,5 @@
 import { IUsuarios, Usuario } from '../models/usuario';
+import { Tarefa } from '../models/tarefa';
 
 import { UsuarioNaoExisteError } from '../errors/usuario/usuarioNaoExisteError';
 import { UsuarioSenhaErradaError } from '../errors/usuario/usuarioSenhaErradaError';
@@ -20,3 +21,15 @@ export async function validaUsuarioESenha(usuarioEmail: string, usuarioSenha: st
 
     return usuario
 }
+
+/**
+ * Deleta todas as tarefas de um usuário. Assume que o usuário está validado.
+ * 
+ * @param usuarioEmail 
+ */
+export async function deletaTodasTarefasUsuario(usuarioEmail: string) {
+
+    await Tarefa.deleteMany({usuarioEmail: usuarioEmail})
+
+}
+    
