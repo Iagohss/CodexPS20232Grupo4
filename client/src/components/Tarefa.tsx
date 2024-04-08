@@ -6,7 +6,6 @@ type TarefaProps = {
 
 const Tarefa = (props : TarefaProps) => {
   const tarefa = props.tarefa;
-  console.log(tarefa)
   return (
     <div 
         className="todo" 

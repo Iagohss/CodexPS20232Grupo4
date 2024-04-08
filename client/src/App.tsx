@@ -26,11 +26,10 @@ function App() {
       titulo: "Teste",
       descricao: "Testando",
       dataAdicionada: dataAdicionada,
-      dataLimite: dataLimite,
-      dataConclusao: dataConclusao
+      dataLimite: dataAdicionada,
+      dataConclusao: dataAdicionada
     };
     const dadosComSenha = {...newTarefa, usuarioSenha : "senhateste"};
-    console.log(newTarefa);
     postTarefa(dadosComSenha)
     .then(() => {
       setTarefas([...tarefas, newTarefa]);
