@@ -10,7 +10,7 @@ export const usuarioSchemaValidate = Joi.object({
     senha: Joi.string().required()
 });
 
-interface IUsuarios{
+export interface IUsuarios{
     email: string,
     primeiroNome: string,
     restoNome: string,

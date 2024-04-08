@@ -1,6 +1,8 @@
 import { Tarefa } from "../models/tarefa";
 import { Usuario } from '../models/usuario';
 
+import { validaUsuarioESenha } from "../utils/usuario.utils";
+
 import { GetTarefaDTO } from "../dto/tarefa/getTarefa.dto";
 import { PostTarefaDTO } from "../dto/tarefa/postTarefa.dto";
 import { CreateTarefaDTO } from "../dto/tarefa/createTarefa.dto";
@@ -8,8 +10,10 @@ import { ReturnTarefaDTO } from "../dto/tarefa/returnTarefa.dto";
 
 import { MongoServerError } from 'mongodb';
 import {DatabaseError} from '../errors/databaseError'
+import { ResponseError } from "../errors/ResponseError";
 import { TarefaNaoPodeSerCriadaError } from "../errors/tarefas/tarefaNaoPodeSerCriadaError";
 import { UsuarioNaoExisteError } from "../errors/usuario/usuarioNaoExisteError";
+import { GetTarefasEmailDTO } from "../dto/tarefa/getTarefasEmail.dto";
 
 
 export class tarefaService{
@@ -19,17 +23,36 @@ export class tarefaService{
         try{
             const tarefas = await Tarefa.find({})
 
-            const tarefasDTO: ReturnTarefaDTO[] = tarefas.map(tarefa => {
-                return ReturnTarefaDTO.criarComTarefa(tarefa)
-            })
+            const tarefasDTO = ReturnTarefaDTO.criarComTarefas(tarefas)
 
             return tarefasDTO
         }catch (error: any){
             throw new DatabaseError(error.message)
         }
     }
+
+    // GET ALL EMAIL
+    async getTarefasEmail(usuarioEmail: string, usuarioSenha: string){
+        try{
+            await validaUsuarioESenha(usuarioEmail, usuarioSenha)
+            const tarefas = await Tarefa.find({usuarioEmail: usuarioEmail})
+
+            const tarefasDTO = ReturnTarefaDTO.criarComTarefas(tarefas)
+
+            return tarefasDTO
+
+        }catch(error: any){
+            if (error instanceof ResponseError){
+                throw error
+            }else{
+                throw new DatabaseError(error.message)
+            }
+
+        }
+
+    }    
     // GET ID
-    async getTarefa(data: any){
+    async getTarefa(data: any){ // TODO 
         try{
             const getTarefaDTO = new GetTarefaDTO(data)
         }catch(error: any){

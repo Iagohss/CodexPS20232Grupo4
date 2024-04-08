@@ -43,4 +43,8 @@ export class ReturnTarefaDTO {
         };
         return new ReturnTarefaDTO(tarefaData);
     }
+
+    static criarComTarefas(tarefas: any[]): ReturnTarefaDTO[] {
+        return tarefas.map(tarefa => ReturnTarefaDTO.criarComTarefa(tarefa));
+    }
 }

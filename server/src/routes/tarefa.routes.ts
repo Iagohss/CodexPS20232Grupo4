@@ -7,13 +7,16 @@ export const tarefaRouter = express.Router()
 tarefaRouter.get('/', TarefaController.getTarefas)
 
 // GET ID
-//usuarioRouter.get('/:id', TarefaController.getTarefa)
+//tarefaRouter.get('/:id', TarefaController.getTarefa)
+
+// GET ALL EMAIL
+tarefaRouter.get('/email/:usuarioEmail', TarefaController.getTarefasEmail)
 
 // POST
 tarefaRouter.post('/', TarefaController.postTarefa)
 
 // PUT
-//usuarioRouter.put('/:id', TarefaController.putTarefa)
+//tarefaRouter.put('/:id', TarefaController.putTarefa)
 
 // DELETE
-//usuarioRouter.delete('/:id', TarefaController.deleteTarefa)
+//tarefaRouter.delete('/:id', TarefaController.deleteTarefa)

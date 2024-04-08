@@ -2,13 +2,12 @@ import {Request, Response} from 'express'
 
 import { tarefaServices } from '../services/tarefa.service'
 
-import { tarefaSchemaValidate } from '../models/tarefa'
-
-import { CreateTarefaDTO, createTarefaSchema } from '../dto/tarefa/createTarefa.dto'
+import { createTarefaSchema } from '../dto/tarefa/createTarefa.dto'
 
 import {ResponseError} from '../errors/ResponseError'
 import { postTarefaSchema } from '../dto/tarefa/postTarefa.dto'
 import { ValidationError } from 'joi'
+import { getTarefasEmailSchema } from '../dto/tarefa/getTarefasEmail.dto'
 
 
 class tarefaController{
@@ -21,9 +20,38 @@ class tarefaController{
         }catch(error: any){
             if (error instanceof ResponseError){
                 res.status(error.codigoResposta).json(error.message);
+            }else{
+                res.status(500).json("Erro no servidor")
             }
         }
     }
+
+    // GET ALL EMAIL
+    getTarefasEmail = async (req: Request, res: Response) => {
+        try{
+            const dados = {
+                usuarioSenha: req.body.usuarioSenha
+            }
+
+            const {error, value} = getTarefasEmailSchema.validate(dados)
+
+            if (error){ // se a validação na aplicação falhar:
+                const message = error.details.map(detail => detail.message);
+                res.status(400).json(message)
+            }else{ // a validação na aplicação deu certo, falta a do MongoDB:
+                const tarefas = await tarefaServices.getTarefasEmail(req.params.usuarioEmail, value.usuarioSenha)
+                res.status(201).send(tarefas)
+            }
+        }catch(error: any){
+            if (error instanceof ResponseError){
+                res.status(error.codigoResposta).json(error.message)
+            }else{
+                res.status(500).json("Erro no servidor")
+            
+            }
+        }
+    }
+
     // POST
     postTarefa = async(req: Request, res: Response) =>{
         const dadosSemSenha = {
@@ -34,7 +62,7 @@ class tarefaController{
             dataLimite: req.body.dataLimite,
             dataConclusao: req.body.dataConclusao
         };
-
+        // TODO: REFACTOR. Complexidade desnecessária.
         const dadosComSenha = {...dadosSemSenha, usuarioSenha : req.body.usuarioSenha}
 
         const {error: error1, value: valueComSenha} = postTarefaSchema.validate(dadosComSenha)
