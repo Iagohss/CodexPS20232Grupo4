@@ -12,6 +12,7 @@ import { UsuarioNaoPodeSerCriadoError } from '../errors/usuario/usuarioNaoPodeSe
 import { UsuarioNaoPodeSerModificadoError } from '../errors/usuario/usuarioNaoPodeSerModificadoError';
 import { UsuarioNaoPodeSerDeletadoError } from '../errors/usuario/usuarioNaoPodeSerDeletadoError';
 import { ResponseError } from '../errors/ResponseError';
+import { deletaTodasTarefasUsuario } from '../utils/usuario.utils';
 
 export class usuarioService{
     
@@ -110,17 +111,15 @@ export class usuarioService{
 
             await Usuario.deleteOne({email: deleteUsuarioDTO.data.email})
 
+            await deletaTodasTarefasUsuario(deleteUsuarioDTO.data.email)
+
         }catch(error: any){
             if (error instanceof ResponseError){ // Encapsulando a situação da senha estar errada
                 throw error
             }
             if (error instanceof MongoServerError){ // Bloco referente aos erros que podem ser jogados pelo MongoDB
-                if (error.code === 11000){
-                    const message = {message: `Usuário não pôde ser criado.`, valores: error.keyValue};
-                    throw new UsuarioNaoPodeSerCriadoError(JSON.stringify(message))
-                }else{ //TODO: os outros códigos do MongoServerError para não lançar apenas um DatabaseError
-                    throw new DatabaseError(error.message)
-                }
+                const message = {message: `Usuário não pôde ser deletado.`, valores: error.keyValue};
+                throw new UsuarioNaoPodeSerDeletadoError(JSON.stringify(message))
             }else{
                 throw new DatabaseError(error.message)
             }
