@@ -10,9 +10,11 @@ const Tarefa = (props : TarefaProps) => {
   const { tarefa, completeTarefa, removeTarefa } = props;
 
   const handleComplete = () => {
-    let newTarefa = tarefa;
-    newTarefa.dataConclusao = new Date();
-    completeTarefa(newTarefa);
+    if (!tarefa.dataConclusao) {
+      let newTarefa = tarefa;
+      newTarefa.dataConclusao = new Date();
+      completeTarefa(newTarefa);
+    }
     };
 
   const handleRemove = () => {
@@ -40,9 +42,9 @@ const Tarefa = (props : TarefaProps) => {
         </div>
         <div>
         <button className="complete" onClick={handleComplete}>
-            Completar
+            {tarefa.dataConclusao ? "Tarefa concluída!" : "Completar"}
         </button>
-        <button className="remove"  onClick={handleRemove} >
+        <button className="remove" onClick={handleRemove} >
             x
         </button>
         </div>

@@ -57,7 +57,19 @@ function App() {
       <Filter filter={filter} setFilter={setFilter}/>
     </div>
     <div className="todo-list">
-      {tarefas.map((tarefa) => (
+      {tarefas
+      .filter((tarefa) => 
+        filter === "All" 
+          ? true 
+          : filter === "Completed" 
+          ? tarefa.dataConclusao 
+          : !tarefa.dataConclusao
+      )
+      .filter((tarefa) => 
+        tarefa.titulo.toLowerCase().includes(search.toLowerCase()) ||
+        tarefa.descricao.toLowerCase().includes(search.toLowerCase())
+      )
+      .map((tarefa) => (
           <Tarefa 
             key={tarefa.id} 
             tarefa={tarefa}
