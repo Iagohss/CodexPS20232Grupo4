@@ -6,19 +6,40 @@ import Search from './components/Search';
 import Filter from './components/Filter';
 
 import { doGETALLtarefa } from "./api/getTarefas";
-import { doPOSTtarefa } from "./api/postTarefas";
-import { TTarefa, TarefaNoAutentication } from './api/types';
+import { doPOSTtarefa } from "./api/postTarefa";
+import { DadosComSenha, TTarefa, TarefaNoAutentication} from './api/types';
+import { doPUTtarefa } from './api/putTarefa';
+import { doDELETEtarefa } from './api/deleteTarefa';
 
 function App() {
   const [tarefas, setTarefas] = useState<TTarefa[]>([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
+  const [email, setEmail] = useState("testeemail@email.com");
+  const [senha, setSenha] = useState("senhateste");
 
-  const addTarefa = async (newTarefa : TarefaNoAutentication) => {
-    const dadosComSenha = {...newTarefa, usuarioEmail: "testeemail@email.com", usuarioSenha : "senhateste"};
-    const nTarefa = await doPOSTtarefa(dadosComSenha)
+  const postTarefa = async (newTarefa : TarefaNoAutentication) => {
+    const dadosComSenha = {...newTarefa, usuarioEmail: email, usuarioSenha : senha};
+    const nTarefa = await doPOSTtarefa(dadosComSenha);
     setTarefas([...tarefas, nTarefa]);
   };
+
+  const putTarefa = async (newTarefa : TTarefa ) => {
+    const dadosComSenha : DadosComSenha= {...newTarefa, usuarioSenha : senha};
+    const nTarefa = await doPUTtarefa(dadosComSenha);
+    setTarefas(tarefas.map(tarefa => 
+      tarefa.id === nTarefa.id ? nTarefa : tarefa 
+    ));
+  };
+
+  const deleteTarefa = async (id : string) => {
+    const autentication = {usuarioEmail: email, usuarioSenha : senha}
+    doDELETEtarefa(autentication, id).then(() => {
+      setTarefas(tarefas.filter(tarefa => 
+        !(tarefa.id === id)
+      ));
+    });
+  }
 
   useEffect(() => {
     async function fetchTarefas() {
@@ -38,12 +59,14 @@ function App() {
     <div className="todo-list">
       {tarefas.map((tarefa) => (
           <Tarefa 
-            key={tarefa.titulo} 
-            tarefa={tarefa} 
+            key={tarefa.id} 
+            tarefa={tarefa}
+            completeTarefa={putTarefa}
+            removeTarefa={deleteTarefa}
           />
       ))}
     </div>
-    <TodoForm addTarefa = {addTarefa}/>
+    <TodoForm addTarefa={postTarefa}/>
    </div>
    );
 }

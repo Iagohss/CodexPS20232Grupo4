@@ -49,7 +49,9 @@ const TodoForm = (props : AddTarefaProps) => {
                 id="data"
                 placeholder='Digite o título da tarefa' 
                 value={dataLimite.toISOString().substring(0,10)}
-                onChange={(e)=> setDataLimite(new Date(e.target.value))}
+                onChange={(e)=> {
+                  if (e.target.value) setDataLimite(new Date(e.target.value))
+                }}
             />
             <button type='submit'>Criar Tarefa</button>
         </form>

@@ -1,30 +1,50 @@
 import { TTarefa } from '../api/types'
 
 type TarefaProps = {
-  tarefa : TTarefa
+  tarefa : TTarefa,
+  completeTarefa : (newTarefa: TTarefa) => Promise<void>,
+  removeTarefa : (id : string) => Promise<void>
 }
 
 const Tarefa = (props : TarefaProps) => {
-  const tarefa = props.tarefa;
+  const { tarefa, completeTarefa, removeTarefa } = props;
+
+  const handleComplete = () => {
+    let newTarefa = tarefa;
+    newTarefa.dataConclusao = new Date();
+    completeTarefa(newTarefa);
+    };
+
+  const handleRemove = () => {
+    removeTarefa(tarefa.id);
+    };
+
   return (
-    <div 
-        className="todo" 
-        style={{ textDecoration: tarefa.dataConclusao && 
-                                  tarefa.dataConclusao <= tarefa.dataLimite ? "line-through" : "" 
-        }}
-    >
+    <div className="todo">
         <div className="content">
-        <h4 className="titulo">{tarefa.titulo}</h4>
-        <p className="descricao">{tarefa.descricao}</p>
-        <p className="data">Data Limite: {tarefa.dataLimite.toString().substring(0,10)}</p>
+          <div 
+            className="details" style={{ 
+              textDecoration: tarefa.dataConclusao
+                ? "line-through" 
+                : "" 
+            }}
+          >
+            <h4 className="titulo">{tarefa.titulo}</h4>
+            <p className="descricao">{tarefa.descricao}</p>
+          </div>
+          <p className="data"> {
+            tarefa.dataConclusao
+              ? "Data de conclusão: " + tarefa.dataConclusao!.toString().substring(0,10)
+              : "Data Limite: " + tarefa.dataLimite.toString().substring(0,10) 
+          }</p>
         </div>
         <div>
-        <button className="complete" /* onClick={() => completeTodo(todo.id)} */>
+        <button className="complete" onClick={handleComplete}>
             Completar
         </button>
-        {/* <button className="remove" onClick={() => rmvTodo(todo.id)}>
+        <button className="remove"  onClick={handleRemove} >
             x
-        </button> */}
+        </button>
         </div>
     </div>
   )

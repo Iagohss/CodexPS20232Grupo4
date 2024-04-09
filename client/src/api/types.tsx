@@ -1,4 +1,5 @@
 export type TTarefa = {
+  id: string,
   usuarioEmail: string,
   titulo: string,
   descricao: string,
@@ -20,11 +21,27 @@ export type _dataTarefas = {
 }
 
 export type DadosComSenha = {
+  id: string,
   usuarioEmail: string,
   titulo: string,
   descricao: string,
   dataAdicionada: Date,
   dataLimite: Date,
   dataConclusao?: Date,
+  usuarioSenha : string
+}
+
+export type DadosComSenhaNoId = {
+  usuarioEmail: string,
+  titulo: string,
+  descricao: string,
+  dataAdicionada: Date,
+  dataLimite: Date,
+  dataConclusao?: Date,
+  usuarioSenha : string
+}
+
+export type Autentication = {
+  usuarioEmail: string,
   usuarioSenha : string
 }

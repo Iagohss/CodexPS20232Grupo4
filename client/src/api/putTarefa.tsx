@@ -1,8 +1,8 @@
 import { DadosComSenha, _dataTarefas, TTarefa } from "./types";
 
-export async function doPOSTtarefa(dadosComSenha : DadosComSenha) : Promise<TTarefa>{
-  const response = await fetch(`http://localhost:5000/api/v1/tarefas`, {
-    method: "POST",
+export async function doPUTtarefa(dadosComSenha : DadosComSenha) : Promise<TTarefa>{
+  const response = await fetch(`http://localhost:5000/api/v1/tarefas/${dadosComSenha.id}`, {
+    method: "PUT",
     body: JSON.stringify(
       dadosComSenha
     ),

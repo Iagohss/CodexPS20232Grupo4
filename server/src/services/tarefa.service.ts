@@ -9,7 +9,7 @@ import { CreateTarefaDTO } from "../dto/tarefa/createTarefa.dto";
 import { ReturnTarefaDTO } from "../dto/tarefa/returnTarefa.dto";
 
 import { MongoServerError } from 'mongodb';
-import {DatabaseError} from '../errors/databaseError'
+import { DatabaseError } from '../errors/databaseError'
 import { ResponseError } from "../errors/ResponseError";
 import { TarefaNaoPodeSerCriadaError } from "../errors/tarefas/tarefaNaoPodeSerCriadaError";
 import { UsuarioNaoExisteError } from "../errors/usuario/usuarioNaoExisteError";
