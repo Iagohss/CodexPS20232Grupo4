@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 
     const uri = `mongodb+srv://${process.env.DETALHES_CONEXAO}.dmx1tcy.mongodb.net/todolist?retryWrites=true&w=majority&appName=todolist`
 
-    configuraDB(uri).then(() => {
+    configuraDB(uri, true).then(() => {
 
         const porta = process.env.PORT ? Number(process.env.PORT) : 5000;
 

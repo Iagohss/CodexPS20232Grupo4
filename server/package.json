@@ -27,7 +27,7 @@
     "start": "node ./build/server/server.js",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "test": "tsc && jest --detectOpenHandles"
+    "test": "tsc && jest"
   },
   "name": "todolist",
   "version": "1.0.0",

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-export function configuraDB(uri: string) {
+export function configuraDB(uri: string, verbose: boolean = false) {
 
     const options = {
         autoIndex: false,
@@ -12,7 +12,7 @@ export function configuraDB(uri: string) {
     return mongoose.connect(uri, options)
         .then(res => {
             if (res) {
-                console.log("Conexão com MongoDB realizada com sucesso.")
+                if (verbose) {console.log("Conexão com MongoDB realizada com sucesso.")}
             }
             return res;
         }).catch(err => {
