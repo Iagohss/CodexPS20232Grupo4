@@ -1,22 +1,17 @@
-import express from 'express'
-const cors = require('cors');
-import { db} from '../config/db.config'
-import { usuarioRouter } from '../routes/usuario.routes'
-import { tarefaRouter } from '../routes/tarefa.routes'
+import express, { Application } from 'express';
+import cors from 'cors';
+import { usuarioRouter } from '../routes/usuario.routes';
+import { tarefaRouter } from '../routes/tarefa.routes';
 
-const app = express()
+const app: Application = express()
 
 // Middleware
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
-// Routes
+// Rotas
 app.use('/api/v1/usuarios', usuarioRouter)
 app.use('/api/v1/tarefas', tarefaRouter)
 
-const porta = process.env.PORT
-
-db.then(() => {
-    app.listen(porta, () => console.log(`Servidor monitorando a porta ${porta}.`))
-})
+export default app
