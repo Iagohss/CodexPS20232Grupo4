@@ -43,7 +43,7 @@ class tarefaController{
                 res.status(400).json(message)
             }else{ // a validação na aplicação deu certo, falta a do MongoDB:
                 const tarefas = await tarefaServices.getTarefasEmail(req.params.usuarioEmail, value.usuarioSenha)
-                res.status(201).send(tarefas)
+                res.status(200).send(tarefas)
             }
         }catch(error: any){
             if (error instanceof ResponseError){
