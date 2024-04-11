@@ -111,3 +111,14 @@ label {
 .search input{
   width: 90%;
 }
+
+
+.login-form .link-cadastro {
+  color:#333974;
+  text-decoration:none;
+  font-weight: bold;
+}
+
+.login-form .link-cadastro:hover {
+  text-decoration:underline;
+}
