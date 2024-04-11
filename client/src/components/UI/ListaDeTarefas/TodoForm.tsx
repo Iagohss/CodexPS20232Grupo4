@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { TarefaNoAutentication } from '../../util/types'
+import { TarefaNoAutentication } from '../../../util/types'
 
 type AddTarefaProps = {addTarefa : (nt : TarefaNoAutentication) => void}
 const TodoForm = (props : AddTarefaProps) => {

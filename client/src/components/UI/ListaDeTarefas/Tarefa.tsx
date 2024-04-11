@@ -1,4 +1,4 @@
-import { TTarefa } from '../../util/types'
+import { TTarefa } from '../../../util/types'
 
 type TarefaProps = {
   tarefa : TTarefa,

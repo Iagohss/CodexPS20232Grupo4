@@ -3,13 +3,11 @@ import Tarefa from "./Tarefa"
 import TodoForm from './TodoForm';
 import Search from './Search';
 import Filter from './Filter';
-import { DadosComSenha, TTarefa, TarefaNoAutentication } from '../../util/types';
-import { doDELETEtarefa } from '../../util/deleteTarefa';
-import { doGETALLtarefa } from '../../util/getTarefas';
-import { doPOSTtarefa } from '../../util/postTarefa';
-import { doPUTtarefa } from '../../util/putTarefa';
-
-
+import { DadosComSenha, TTarefa, TarefaNoAutentication } from '../../../util/types';
+import { doDELETEtarefa } from '../../../util/deleteTarefa';
+import { doGETALLtarefa } from '../../../util/getTarefas';
+import { doPOSTtarefa } from '../../../util/postTarefa';
+import { doPUTtarefa } from '../../../util/putTarefa';
 
 const ListaDeTarefas = () => {
   const [tarefas, setTarefas] = useState<TTarefa[]>([]);
