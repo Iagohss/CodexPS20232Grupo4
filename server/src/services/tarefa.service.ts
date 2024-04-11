@@ -56,7 +56,7 @@ export class tarefaService{
 
     }    
     // GET ID
-    async getTarefa(data: any){ // TODO 
+    async getTarefa(data: any){
         try{
             const getTarefaDTO = new GetTarefaDTO(data)
 
@@ -101,7 +101,7 @@ export class tarefaService{
                 if (error.code == 11000){
                     const message = {message: `Usuário não pôde ser criado.`, valores: error.keyValue}
                     throw new TarefaNaoPodeSerCriadaError(JSON.stringify(message))
-                }else{ //TODO: os outros códigos do MongoServerError para não lançar apenas um DatabaseError
+                }else{
                     throw new DatabaseError(error.message)
                 }
             }else{ // 

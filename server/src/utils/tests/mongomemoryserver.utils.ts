@@ -3,6 +3,11 @@ import { configuraDB, desconectaDB } from "../../config/db.config"
 import { Usuario } from "../../models/usuario"
 import { Tarefa } from "../../models/tarefa"
 
+/**
+ * Cria e retorna uma instância de um MongoMemoryServer preparado para os testes.
+ * 
+ * @returns Uma Promise de um MongoMemoryServer.
+ */
 export async function createMongoMemoryServer(): Promise<MongoMemoryServer> {
     const mongoServer = new MongoMemoryServer()
     await mongoServer.start()
@@ -16,7 +21,12 @@ export async function createMongoMemoryServer(): Promise<MongoMemoryServer> {
     return mongoServer
 }
 
-export async function stopMongoMemoryServer(mongoServer: MongoMemoryServer){
+/**
+ * Para o MongoMemoryServer e desfaz a conexão do Mongoose.
+ * 
+ * @param mongoServer - O MongoMemoryServer a ser parado.
+ */
+export async function stopMongoMemoryServer(mongoServer: MongoMemoryServer) {
     await desconectaDB()
     await mongoServer.stop()
 }

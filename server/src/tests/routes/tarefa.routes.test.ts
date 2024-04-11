@@ -23,7 +23,7 @@ describe('Rotas de Tarefas', () => {
             await stopMongoMemoryServer(mongoServer)
         })
 
-        it('retorna todos as tarefas', async () => {
+        it('retorna todas as tarefas', async () => {
 
             await addTarefas(usuarioEmail, 2)
 

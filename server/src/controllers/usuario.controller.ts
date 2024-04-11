@@ -117,7 +117,7 @@ class usuarioController{
         }else{ // a validação na aplicação deu certo, falta a do MongoDB:
             try{
                 await usuarioServices.deleteUsuario(value)
-                res.status(204).json("Usuário deletado com sucesso") // TODO dto
+                res.status(204).json("Usuário deletado com sucesso")
             }catch(error: any){ // se o MongoDB rejeitar
                 if (error instanceof ResponseError){
                     res.status(error.codigoResposta).json(error.message)

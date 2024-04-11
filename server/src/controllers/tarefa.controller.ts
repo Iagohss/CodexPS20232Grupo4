@@ -11,6 +11,7 @@ import { getTarefasEmailSchema } from '../dto/tarefa/getTarefasEmail.dto'
 import { getTarefaSchema } from '../dto/tarefa/getTarefa.dto'
 import { putTarefaSchemaValidate } from '../dto/tarefa/putTarefa.dto'
 import { deleteTarefaSchemaValidate } from '../dto/tarefa/deleteTarefa.dto'
+import { traduzErroJOI } from '../utils/traduz.joi.utils'
 
 
 class tarefaController{
@@ -92,7 +93,7 @@ class tarefaController{
             dataLimite: req.body.dataLimite,
             dataConclusao: req.body.dataConclusao
         };
-        // TODO: REFACTOR. Complexidade desnecessária.
+
         const dadosComSenha = {...dadosSemSenha, usuarioSenha : req.body.usuarioSenha}
 
         const {error: error1, value: valueComSenha} = postTarefaSchema.validate(dadosComSenha)
@@ -101,8 +102,8 @@ class tarefaController{
 
         if (error1 || error2){ // se a validação na aplicação falhar:
             const error: ValidationError = (error1 ? error1 : error2) as ValidationError
-            const message = error.details.map(detail => detail.message);
-            res.status(400).send(message) // TODO traduzir essas mensagens
+            const message = error.details.map(detail => traduzErroJOI(detail.message));
+            res.status(400).send(message)
         }else{ // a validação na aplicação deu certo, falta a do MongoDB:
             try{
                 const tarefa = await tarefaServices.postTarefa(valueComSenha)
