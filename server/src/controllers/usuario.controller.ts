@@ -1,10 +1,12 @@
-import {usuarioServices} from '../services/usuario.service'
-import {Request, Response} from 'express'
-import {usuarioSchemaValidate} from '../models/usuario'
+import { usuarioServices } from '../services/usuario.service'
+import { Request, Response } from 'express'
+import { usuarioSchemaValidate } from '../models/usuario'
 import { putUsuarioSchemaValidate } from '../dto/usuario/putUsuario.dto'
 import { deleteUsuarioSchemaValidate } from '../dto/usuario/deleteUsuario.dto'
 
-import {ResponseError} from '../errors/ResponseError'
+import { ResponseError } from '../errors/ResponseError'
+
+import { traduzErroJOI } from '../utils/traduz.joi.utils'
 
 class usuarioController{
 
@@ -49,8 +51,8 @@ class usuarioController{
         const {error, value} = usuarioSchemaValidate.validate(dados, { stripUnknown: true })
 
         if (error){ // se a validação na aplicação falhar:
-            const message = error.details.map(detail => detail.message);
-            res.status(400).send(message) // TODO traduzir essas mensagens
+            const message = error.details.map(detail => traduzErroJOI(detail.message));
+            res.status(400).send(message)
         }else{ // a validação na aplicação deu certo, falta a do MongoDB:
             try{
                 const usuario = await usuarioServices.postUsuario(value)
@@ -82,12 +84,12 @@ class usuarioController{
         const {error, value} = putUsuarioSchemaValidate.validate(dados, { stripUnknown: true })
 
         if (error){ // se a validação na aplicação falhar:
-            const message = error.details[0].message;
-            res.status(400).send(message) // TODO traduzir essas mensagens
+            const message = error.details.map(detail => traduzErroJOI(detail.message));
+            res.status(400).send(message)
         }else{ // a validação na aplicação deu certo, falta a do MongoDB:
             try{
                 const usuario = await usuarioServices.putUsuario(value)
-                res.status(201).send(usuario) // TODO dto
+                res.status(200).send(usuario)
 
             }catch(error: any){ // se o MongoDB rejeitar
                 if (error instanceof ResponseError){
@@ -110,8 +112,8 @@ class usuarioController{
         const {error, value} = deleteUsuarioSchemaValidate.validate(dados, { stripUnknown: true })
 
         if (error){ // se a validação na aplicação falhar:
-            const message = error.details[0].message;
-            res.status(400).json(message) // TODO traduzir essas mensagens
+            const message = error.details.map(detail => traduzErroJOI(detail.message));
+            res.status(400).send(message)
         }else{ // a validação na aplicação deu certo, falta a do MongoDB:
             try{
                 await usuarioServices.deleteUsuario(value)

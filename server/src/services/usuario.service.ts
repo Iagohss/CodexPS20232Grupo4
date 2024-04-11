@@ -92,12 +92,16 @@ export class usuarioService{
             return ReturnUsuarioDTO.criarComUsuario(updateUsuario)
 
         }catch(error: any){
-            throw new UsuarioNaoPodeSerModificadoError(error.message)
+            if (error instanceof ResponseError){
+                throw error
+            }else{
+                throw new UsuarioNaoPodeSerModificadoError(error.message)
+            }
         }
     }
 
     // DELETE
-    async deleteUsuario(data: any){ // TODO: CASCADE PARA DELETAR TAMBÉM AS TAREFAS DO USUÁRIO
+    async deleteUsuario(data: any){
         try{
             const deleteUsuarioDTO = new DeleteUsuarioDTO(data)
 
@@ -114,7 +118,7 @@ export class usuarioService{
             await deletaTodasTarefasUsuario(deleteUsuarioDTO.data.email)
 
         }catch(error: any){
-            if (error instanceof ResponseError){ // Encapsulando a situação da senha estar errada
+            if (error instanceof ResponseError){ // Erros lançados no próprio bloco try
                 throw error
             }
             if (error instanceof MongoServerError){ // Bloco referente aos erros que podem ser jogados pelo MongoDB

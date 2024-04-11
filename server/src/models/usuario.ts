@@ -2,7 +2,7 @@ import {Schema, model} from 'mongoose';
 import Joi from 'joi';
 
 export const usuarioSchemaValidate = Joi.object({
-    email: Joi.string().required(),
+    email: Joi.string().email().required(),
     primeiroNome: Joi.string().required(),
     restoNome: Joi.string().required(),
     dataNascimento: Joi.date().required(),
