@@ -1,15 +1,15 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/Context";
 import { doGETusuario } from "../../../util/getUsuario";
 
 const Login = () => {
   const context = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState(false);
-  const navigate = useNavigate();
 
   const handleSubmit = async (e : React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +51,7 @@ const Login = () => {
             />
             <p className="erro">{
             error
-              ? "Email ou senha incorretos!"
+              ? "Email e senha incorretos!"
               : ""
             }</p>
             <button type='submit'>OK</button>

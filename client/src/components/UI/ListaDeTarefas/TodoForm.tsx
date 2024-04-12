@@ -3,9 +3,9 @@ import { TarefaNoAutentication } from '../../../util/types'
 
 type AddTarefaProps = {addTarefa : (nt : TarefaNoAutentication) => void}
 const TodoForm = (props : AddTarefaProps) => {
-    const [titulo, setTitulo] = useState("")
-    const [descricao, setDescricao] = useState("")
-    const [dataLimite, setDataLimite] = useState(new Date())
+    const [titulo, setTitulo] = useState("");
+    const [descricao, setDescricao] = useState("");
+    const [dataLimite, setDataLimite] = useState(new Date());
 
     const handleSubmit = (e : React.FormEvent) => {
         e.preventDefault();
@@ -47,7 +47,6 @@ const TodoForm = (props : AddTarefaProps) => {
             <input  
                 type="date" 
                 id="data"
-                placeholder='Digite o título da tarefa' 
                 value={dataLimite.toISOString().substring(0,10)}
                 onChange={(e)=> {
                   if (e.target.value) setDataLimite(new Date(e.target.value))
