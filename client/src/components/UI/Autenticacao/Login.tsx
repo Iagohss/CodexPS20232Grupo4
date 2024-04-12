@@ -15,7 +15,6 @@ const Login = () => {
     e.preventDefault();
     try {
       const user = await doGETusuario(email);
-      console.log(user);
       if (user.senha != senha) {
         throw "Senha invalida";
       }

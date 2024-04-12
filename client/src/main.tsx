@@ -8,6 +8,7 @@ import Login from './components/UI/Autenticacao/Login.tsx';
 import Cadastro from './components/UI/Autenticacao/Cadastro.tsx';
 import ListaDeTarefas from './components/UI/ListaDeTarefas/ListaDeTarefas.tsx';
 import AuthProvider from './components/context/Context.tsx';
+import Editar from './components/UI/Autenticacao/Editar.tsx';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: '/tarefas',
         element: <ListaDeTarefas/>
+      },
+      {
+        path: '/editar',
+        element: <Editar/>
       }
     ]
   }

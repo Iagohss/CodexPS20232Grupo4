@@ -17,6 +17,16 @@ export type TUsuario = {
   senha: string
 }
 
+export type dadosPUTusuario = {
+  email: string,
+  primeiroNome: string,
+  restoNome: string,
+  dataNascimento: Date,
+  genero: string,
+  senhaAntiga: string,
+  senhaNova: string
+};
+
 export type TarefaNoAutentication = {
   titulo: string,
   descricao: string,

@@ -5,6 +5,7 @@ import Tarefa from "./Tarefa"
 import TodoForm from './TodoForm';
 import Search from './Search';
 import Filter from './Filter';
+import Header from './Header';
 import { DadosComSenha, TTarefa, TarefaNoAutentication } from '../../../util/types';
 import { doDELETEtarefa } from '../../../util/deleteTarefa';
 import { doGETALLtarefa } from '../../../util/getTarefas';
@@ -19,6 +20,19 @@ const ListaDeTarefas = () => {
   const [tarefas, setTarefas] = useState<TTarefa[]>([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
+
+  useEffect(() => {
+    if (context!.email == "" || context!.senha == ""){
+      return navigate("/");
+    }
+
+    async function fetchTarefas() {
+      const autentication = {usuarioEmail: context!.email, usuarioSenha : context!.senha}
+      const newTarefas = await doGETALLtarefa(autentication);
+      setTarefas(newTarefas);
+    }
+    fetchTarefas();
+  },[]);
 
   const postTarefa = async (newTarefa : TarefaNoAutentication) => {
     const dadosComSenha = {...newTarefa, usuarioEmail: context!.email, usuarioSenha : context!.senha};
@@ -43,21 +57,9 @@ const ListaDeTarefas = () => {
     });
   }
 
-  useEffect(() => {
-    if (context!.email == "" || context!.senha == ""){
-      return navigate("/");
-    }
-
-    async function fetchTarefas() {
-      //const autentication = {usuarioEmail: context!.email, usuarioSenha : context!.senha}
-      const newTarefas = await doGETALLtarefa();
-      setTarefas(newTarefas);
-    }
-    fetchTarefas();
-  },[]);
-
   return (
    <div className="app">
+    <Header></Header>
     <h1>Lista de tarefas</h1>
     <div className="flex-container">
       <Search search={search} setSearch={setSearch}/>
