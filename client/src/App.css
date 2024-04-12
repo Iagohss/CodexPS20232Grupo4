@@ -113,12 +113,24 @@ label {
 }
 
 
-.login-form .link-cadastro {
+.login-form .link-cadastro, .cadastro-form .link-login{
   color:#333974;
   text-decoration:none;
   font-weight: bold;
+  display: block;
+  text-align: center;
 }
 
-.login-form .link-cadastro:hover {
+.login-form .link-cadastro:hover, .cadastro-form .link-login:hover {
   text-decoration:underline;
+}
+
+.login-form button, .cadastro-form button{
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding: 7px 20px;
+  font-size: 16px;
+  border-radius: 6px;
 }

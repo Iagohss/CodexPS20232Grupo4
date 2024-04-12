@@ -54,7 +54,7 @@ const Login = () => {
               ? "Email e senha incorretos!"
               : ""
             }</p>
-            <button type='submit'>OK</button>
+            <button type='submit'>Realizar login</button>
         </form>
         <Link className="link-cadastro" to="/cadastro"> Cadastrar-se </Link>
     </div>

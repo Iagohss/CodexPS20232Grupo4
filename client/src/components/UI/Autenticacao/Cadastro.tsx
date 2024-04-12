@@ -36,7 +36,6 @@ const Cadastro = () => {
       }
   };
 
-
   return (
     <div className="cadastro-form" onSubmit={handleSubmit}>
         <h1>Realize seu Cadastro</h1>
@@ -97,9 +96,9 @@ const Cadastro = () => {
             />
             <button type='submit'>Cadastrar novo usuário</button>
         </form>
-        <Link className="link-cadastro" to="/"> Já possui uma conta </Link>
+        <Link className="link-login" to="/"> Já possui uma conta </Link>
     </div>
   )
 }
-
+  
 export default Cadastro
