@@ -13,6 +13,7 @@ const Editar = () => {
   const [dataNascimento, setDataNascimento] = useState(new Date());
   const [genero, setGenero] = useState("Masculino"); 
   const [senha, setSenha] = useState(""); 
+  const [error, setError] = useState(false);
   
   useEffect(() => {
     if (context!.email == "" || context!.senha == "")
@@ -32,10 +33,12 @@ const Editar = () => {
     };
   
     try {
+      if (!newUser.senhaNova) throw "senha vazia";
       const user = await doPUTusuario(newUser);
       context!.setSenha(user.senha);
     } catch (error : any){
       setSenha("");
+      setError(true);
     }
 };
 
@@ -89,6 +92,11 @@ return (
               value={senha}
               onChange={(e)=> setSenha(e.target.value)}
           />
+          <p className="erro">{
+            error
+              ? "Informações de usuário inválidas!"
+              : ""
+            }</p>
           <button type='submit'>Editar perfil</button>
       </form>
       <Link className="link-tarefas" to="/tarefas"> Ver suas tarefas </Link>

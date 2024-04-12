@@ -134,6 +134,11 @@ label {
   border-radius: 6px;
 }
 
+.erro {
+  color: #d9534f;
+  text-align: center;
+}
+
 .header {
   display: flex;
   justify-content: flex-end;

@@ -50,7 +50,7 @@ const Login = () => {
             />
             <p className="erro">{
             error
-              ? "Email e senha incorretos!"
+              ? "Email ou senha incorretos!"
               : ""
             }</p>
             <button type='submit'>Realizar login</button>
