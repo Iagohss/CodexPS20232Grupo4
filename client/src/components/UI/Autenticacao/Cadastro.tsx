@@ -14,6 +14,7 @@ const Cadastro = () => {
   const [dataNascimento, setDataNascimento] = useState(new Date());
   const [genero, setGenero] = useState("Masculino"); 
   const [senha, setSenha] = useState(""); 
+  const [error, setError] = useState(false);
   
   const handleSubmit = async (e : React.FormEvent) => {
       e.preventDefault();
@@ -27,12 +28,14 @@ const Cadastro = () => {
       };
       
       try {
+        if (!newUser.senha || !newUser.email) throw "senha ou email vazios";
         const user = await doPOSTusuario(newUser);
         context!.setEmail(user.email);
         context!.setSenha(user.senha)
         return navigate("/tarefas");
       } catch (error : any){
         setSenha("");
+        setError(true);
       }
   };
 
@@ -94,6 +97,11 @@ const Cadastro = () => {
                 value={senha}
                 onChange={(e)=> setSenha(e.target.value)}
             />
+            <p className="erro">{
+            error
+              ? "Informações de usuário inválidas!"
+              : ""
+            }</p>
             <button type='submit'>Cadastrar novo usuário</button>
         </form>
         <Link className="link-login" to="/"> Já possui uma conta </Link>

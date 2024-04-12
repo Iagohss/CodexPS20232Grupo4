@@ -15,7 +15,6 @@ const Login = () => {
     e.preventDefault();
     try {
       const user = await doGETusuario(email);
-      console.log(user);
       if (user.senha != senha) {
         throw "Senha invalida";
       }
@@ -51,7 +50,7 @@ const Login = () => {
             />
             <p className="erro">{
             error
-              ? "Email e senha incorretos!"
+              ? "Email ou senha incorretos!"
               : ""
             }</p>
             <button type='submit'>Realizar login</button>

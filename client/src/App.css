@@ -65,11 +65,11 @@ button:hover{
   align-items: center;
 }
 
-.complete {
+.completen, .link-editar {
   background-color: #5cb85c;
 }
 
-.remove {
+.remove, .deslogar {
   background-color: #d9534f;
 }
 
@@ -112,8 +112,7 @@ label {
   width: 90%;
 }
 
-
-.login-form .link-cadastro, .cadastro-form .link-login{
+.link-cadastro, .link-login, .link-tarefas{
   color:#333974;
   text-decoration:none;
   font-weight: bold;
@@ -121,11 +120,11 @@ label {
   text-align: center;
 }
 
-.login-form .link-cadastro:hover, .cadastro-form .link-login:hover {
+.link-cadastro:hover, .link-login:hover, .link-tarefas:hover{
   text-decoration:underline;
 }
 
-.login-form button, .cadastro-form button{
+.login-form button, .cadastro-form button, .editar-form button{
   display: block;
   margin: 0 auto;
   margin-bottom: 5px;
@@ -133,4 +132,23 @@ label {
   padding: 7px 20px;
   font-size: 16px;
   border-radius: 6px;
+}
+
+.erro {
+  color: #d9534f;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.link-editar {
+  margin-left: 5px; 
+}
+
+.deslogar {
+  margin-left: 5px; 
 }

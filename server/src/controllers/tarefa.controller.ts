@@ -34,7 +34,7 @@ class tarefaController{
     getTarefasEmail = async (req: Request, res: Response) => {
         try{
             const dados = {
-                usuarioSenha: req.body.usuarioSenha
+                usuarioSenha: req.params.usuarioSenha
             }
 
             const {error, value} = getTarefasEmailSchema.validate(dados)
