@@ -34,7 +34,7 @@ describe('Rotas de Tarefas', () => {
         })
     })
 
-    describe('GET ALL EMAIL /tarefas/email/:email', () => {
+    describe('GET ALL EMAIL /tarefas/email/:email/:senha', () => {
         beforeEach(async () => {
             mongoServer = await createMongoMemoryServer()
             const [usuario] = await addUsuarios(1)
@@ -47,22 +47,14 @@ describe('Rotas de Tarefas', () => {
 
         it('dá erro se email não existe', async () => {
 
-            const body = {
-                usuarioSenha: 'senhaqualquer'
-            }
-
-            const res = await request(app).get('/api/v1/tarefas/email/naoexiste@email.com').send(body)
+            const res = await request(app).get('/api/v1/tarefas/email/naoexiste@email.com/senhaqualquer')
 
             expect(res.status).toBe(404)
         })
 
         it('dá erro se a senha não bate', async () => {
 
-            const body = {
-                usuarioSenha: 'senhaqualquer'
-            }
-
-            const res = await request(app).get(`/api/v1/tarefas/email/${usuarioEmail}`).send(body)
+            const res = await request(app).get(`/api/v1/tarefas/email/${usuarioEmail}/senhaqualquer`)
 
             expect(res.status).toBe(401)
             const message = res.body
@@ -73,11 +65,7 @@ describe('Rotas de Tarefas', () => {
 
             await addTarefas(usuarioEmail, 2)
 
-            const body = {
-                usuarioSenha: 'senha1'
-            }
-
-            const res = await request(app).get(`/api/v1/tarefas/email/${usuarioEmail}`).send(body)
+            const res = await request(app).get(`/api/v1/tarefas/email/${usuarioEmail}/senha1`)
 
             expect(res.body.length).toBe(2)
             expect(res.status).toBe(200)

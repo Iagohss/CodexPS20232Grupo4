@@ -10,7 +10,7 @@ tarefaRouter.get('/', TarefaController.getTarefas)
 tarefaRouter.get('/:id', TarefaController.getTarefa)
 
 // GET ALL EMAIL
-tarefaRouter.get('/email/:usuarioEmail', TarefaController.getTarefasEmail)
+tarefaRouter.get('/email/:usuarioEmail/:usuarioSenha', TarefaController.getTarefasEmail)
 
 // POST
 tarefaRouter.post('/', TarefaController.postTarefa)
