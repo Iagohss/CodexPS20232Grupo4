@@ -4,7 +4,7 @@ export async function doPUTtarefa(
   dadosComSenha: DadosComSenha
 ): Promise<TTarefa> {
   const response = await fetch(
-    `http://localhost:5000/api/v1/tarefas/${dadosComSenha.id}`,
+    `https://codexps20232grupo4-2.onrender.com/api/v1/tarefas/${dadosComSenha.id}`,
     {
       method: "PUT",
       body: JSON.stringify(dadosComSenha),

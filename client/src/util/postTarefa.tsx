@@ -3,7 +3,7 @@ import { DadosComSenhaNoId, _dataTarefas, TTarefa } from "./types";
 export async function doPOSTtarefa(
   dadosComSenha: DadosComSenhaNoId
 ): Promise<TTarefa> {
-  const response = await fetch(`http://localhost:5000/api/v1/tarefas`, {
+  const response = await fetch(`https://codexps20232grupo4-2.onrender.com/api/v1/tarefas`, {
     method: "POST",
     body: JSON.stringify(dadosComSenha),
     headers: {
