@@ -112,8 +112,7 @@ label {
   width: 90%;
 }
 
-
-.link-cadastro, .link-login{
+.link-cadastro, .link-login, .link-tarefas{
   color:#333974;
   text-decoration:none;
   font-weight: bold;
@@ -121,11 +120,11 @@ label {
   text-align: center;
 }
 
-.link-cadastro:hover, .link-login:hover{
+.link-cadastro:hover, .link-login:hover, .link-tarefas:hover{
   text-decoration:underline;
 }
 
-.login-form button, .cadastro-form button{
+.login-form button, .cadastro-form button, .editar-form button{
   display: block;
   margin: 0 auto;
   margin-bottom: 5px;
