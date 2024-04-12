@@ -8,6 +8,15 @@ export type TTarefa = {
   dataConclusao?: Date
 };
 
+export type TUsuario = {
+  email: string,
+  primeiroNome: string,
+  restoNome: string,
+  dataNascimento: Date,
+  genero: string,
+  senha: string
+}
+
 export type TarefaNoAutentication = {
   titulo: string,
   descricao: string,
@@ -18,6 +27,10 @@ export type TarefaNoAutentication = {
 
 export type _dataTarefas = {
   _data : TTarefa
+}
+
+export type _dataUsuarios = {
+  _data : TUsuario
 }
 
 export type DadosComSenha = {

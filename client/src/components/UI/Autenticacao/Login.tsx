@@ -1,12 +1,32 @@
-import { Link, Navigate, useNavigate } from "react-router-dom"
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom"
+import { AuthContext } from "../../context/Context";
+import { doGETusuario } from "../../../util/getUsuario";
 
 const Login = () => {
+  const context = useContext(AuthContext);
 
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e : React.FormEvent) => {
+  const handleSubmit = async (e : React.FormEvent) => {
     e.preventDefault();
-    return navigate("/tarefas");
+    try {
+      const user = await doGETusuario(email);
+      console.log(user);
+      if (user.senha != senha) {
+        throw "Senha invalida";
+      }
+      context!.setEmail(user.email);
+      context!.setSenha(user.senha)
+      return navigate("/tarefas");
+    }catch (error : any) {
+      setError(true);
+      setEmail("");
+      setSenha("");
+    }
   };
 
   return (
@@ -18,13 +38,22 @@ const Login = () => {
                 type="Text" 
                 id='email'
                 placeholder='Digite o seu email'
+                value={email}
+                onChange={(e)=> setEmail(e.target.value)}
             />
             <label htmlFor="senha">Sua senha:</label>
             <input  
                 type="password" 
                 id="senha"
                 placeholder='Digite a sua senha'
+                value={senha}
+                onChange={(e)=> setSenha(e.target.value)}
             />
+            <p className="erro">{
+            error
+              ? "Email ou senha incorretos!"
+              : ""
+            }</p>
             <button type='submit'>OK</button>
         </form>
         <Link className="link-cadastro" to="/cadastro"> Cadastrar-se </Link>

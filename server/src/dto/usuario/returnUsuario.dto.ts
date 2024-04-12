@@ -5,7 +5,8 @@ export const returnUsuarioSchema = Joi.object({
     primeiroNome: Joi.string().required(),
     restoNome: Joi.string().required(),
     dataNascimento: Joi.date().required(),
-    genero: Joi.string().valid().required()
+    genero: Joi.string().valid().required(),
+    senha: Joi.string().valid().required()
 });
 
 interface IReturnUsuarioDTO {
@@ -14,6 +15,7 @@ interface IReturnUsuarioDTO {
     restoNome: string;
     dataNascimento: Date;
     genero: string;
+    senha: string;
 }
 
 export class ReturnUsuarioDTO {
@@ -34,6 +36,7 @@ export class ReturnUsuarioDTO {
             restoNome: novoUsuario.restoNome,
             dataNascimento: novoUsuario.dataNascimento,
             genero: novoUsuario.genero,
+            senha: novoUsuario.senha
         };
         return new ReturnUsuarioDTO(usuarioData);
     }
