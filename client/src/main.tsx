@@ -1,44 +1,44 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Login from './components/UI/Autenticacao/Login.tsx';
-import Cadastro from './components/UI/Autenticacao/Cadastro.tsx';
-import ListaDeTarefas from './components/UI/ListaDeTarefas/ListaDeTarefas.tsx';
-import AuthProvider from './components/context/Context.tsx';
-import Editar from './components/UI/Autenticacao/Editar.tsx';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Login from "./components/UI/Autenticacao/Login.tsx";
+import Cadastro from "./components/UI/Autenticacao/Cadastro.tsx";
+import ListaDeTarefas from "./components/UI/ListaDeTarefas/ListaDeTarefas.tsx";
+import AuthProvider from "./components/context/Context.tsx";
+import Editar from "./components/UI/Autenticacao/Editar.tsx";
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <App/>,
+    path: "/",
+    element: <App />,
     children: [
       {
-        path: '/',
-        element: <Login/>
+        path: "/",
+        element: <Login />,
       },
       {
-        path: '/cadastro',
-        element: <Cadastro/>
+        path: "/cadastro",
+        element: <Cadastro />,
       },
       {
-        path: '/tarefas',
-        element: <ListaDeTarefas/>
+        path: "/tarefas",
+        element: <ListaDeTarefas />,
       },
       {
-        path: '/editar',
-        element: <Editar/>
-      }
-    ]
-  }
+        path: "/editar",
+        element: <Editar />,
+      },
+    ],
+  },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

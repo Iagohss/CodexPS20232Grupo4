@@ -11,16 +11,23 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
-function AuthProvider ( {children} : AuthProviderProps) {
+function AuthProvider({ children }: AuthProviderProps) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
   return (
-    <AuthContext.Provider value={{
-      email, setEmail, senha, setSenha
-    }}>
+    <AuthContext.Provider
+      value={{
+        email,
+        setEmail,
+        senha,
+        setSenha,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
